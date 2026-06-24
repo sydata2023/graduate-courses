@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EDUC 833 – Module 4: Quantitative Data Analysis I</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; padding: 2rem 1rem; color: #1a1a1a; }
+    .mp { max-width: 860px; margin: 0 auto; }
+
+    .mod-header { background: #1a2744; border-radius: 12px; padding: 1.75rem 2rem; margin-bottom: 1.5rem; }
+    .course-brand { font-size: 11px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: #7eb3f0; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 0.5px solid #2a3a5c; }
+    .course-brand span { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-transform: none; color: #b8d0f0; margin-left: 8px; }
+    .mod-header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 0.9rem; }
+    .mod-badge { background: #7eb3f0; color: #0a1628; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 13px; border-radius: 20px; white-space: nowrap; }
+    .mod-weeks { font-size: 11px; color: #7eb3f0; border: 0.5px solid #7eb3f0; padding: 4px 10px; border-radius: 20px; white-space: nowrap; margin-left: auto; }
+    .mod-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: #f0f4ff; margin: 0 0 5px; line-height: 1.3; }
+    .mod-subtitle { font-size: 13px; color: #8fa8c8; margin: 0; }
+
+    .section-card { background: #ffffff; border: 0.5px solid #e0e0e0; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+    .sec-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 0.75rem; }
+    .sec-body { font-size: 13px; color: #444; line-height: 1.75; }
+
+    /* SPSS install banner */
+    .install-banner { background: #1a2744; border-radius: 10px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; margin-top: 1rem; }
+    .install-icon { font-size: 22px; flex-shrink: 0; }
+    .install-text { font-size: 13px; color: #c8d8f0; line-height: 1.5; }
+    .install-text strong { color: #7eb3f0; }
+
+    /* Assessment - chapter reading */
+    .assess-single { margin-top: 1rem; }
+    .assess-card { border-radius: 10px; padding: 1rem; display: flex; align-items: flex-start; gap: 10px; text-decoration: none; transition: opacity 0.15s; }
+    .assess-card:hover { opacity: 0.82; }
+    .assess-card.cr { background: #E1F5EE; }
+    .assess-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .assess-icon.cr { background: #0F6E56; color: #fff; }
+    .assess-title { font-size: 13px; font-weight: 500; margin: 0 0 3px; }
+    .assess-title.cr { color: #085041; }
+    .assess-desc { font-size: 11px; margin: 0; }
+    .assess-desc.cr { color: #0F6E56; }
+
+    /* 4 learning activities grid */
+    .la-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 0.75rem; }
+    .la-card { background: #E6F1FB; border-radius: 10px; padding: 0.9rem 1rem; display: flex; align-items: flex-start; gap: 10px; text-decoration: none; transition: opacity 0.15s; }
+    .la-card:hover { opacity: 0.82; }
+    .la-num { width: 28px; height: 28px; border-radius: 50%; background: #185FA5; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .la-title { font-size: 12px; font-weight: 500; color: #0C447C; margin: 0 0 2px; }
+    .la-desc { font-size: 11px; color: #185FA5; margin: 0; }
+
+    /* readings */
+    .reading-list { margin-top: 0.75rem; display: flex; flex-direction: column; gap: 8px; }
+    .reading-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: #f8f8f8; border-radius: 8px; font-size: 13px; color: #333; line-height: 1.5; }
+    .reading-item a { color: #185FA5; text-decoration: none; font-weight: 500; }
+    .reading-item a:hover { text-decoration: underline; }
+    .reading-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .reading-note { font-size: 11px; color: #993C1D; background: #FAECE7; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-top: 4px; }
+
+    .tip-bar { background: #FAEEDA; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #633806; margin-bottom: 1.25rem; }
+
+    .video-card { background: #ffffff; border: 0.5px solid #e0e0e0; border-radius: 12px; overflow: hidden; margin-bottom: 1.25rem; }
+    .video-embed { width: 100%; aspect-ratio: 16/9; }
+    .video-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+    .video-info { padding: 10px 12px; }
+    .video-title { font-size: 12px; font-weight: 500; color: #1a1a1a; margin: 0 0 3px; line-height: 1.4; }
+    .video-note { font-size: 11px; color: #993C1D; background: #FAECE7; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 3px; }
+    .video-meta { font-size: 11px; color: #888; margin: 0; }
+
+    .videos-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 0.75rem; }
+
+    @media (max-width: 600px) {
+      .la-grid { grid-template-columns: 1fr; }
+      .mod-header-top { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+<div class="mp">
+
+  <div class="mod-header">
+    <div class="course-brand">
+      EDUC 833 &nbsp;·&nbsp;<span>Dr. Yoon's Applied Assessment in Educational Research</span>
+    </div>
+    <div class="mod-header-top">
+      <div class="mod-badge">Module 4</div>
+      <div class="mod-weeks">Week 4</div>
+    </div>
+    <h1 class="mod-title">Quantitative Data Analysis I</h1>
+    <p class="mod-subtitle">Fundamentals of statistics and setting up data in SPSS</p>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section-card">
+    <div class="sec-eyebrow">ℹ️ &nbsp;Overview</div>
+    <p class="sec-body">Welcome to this module! In this learning module, you will learn the fundamentals of statistics by watching videos and online reading. In addition, you will practice how to set up raw data in SPSS (Statistical Package for the Social Sciences). SPSS is a very useful tool to analyze numeric data for all researchers, not just for quantitative researchers.</p>
+
+    <div class="install-banner">
+      <div class="install-icon">💾</div>
+      <div class="install-text"><strong>Action required:</strong> Download and install <strong>SPSS</strong> before starting the learning activities. You will need it to complete all 4 activities in this module.</div>
+    </div>
+  </div>
+
+  <!-- ASSESSMENTS -->
+  <div class="section-card">
+    <div class="sec-eyebrow">✅ &nbsp;Assessments for this module</div>
+
+    <p style="font-size: 12px; color: #888; margin-bottom: 0.75rem;">This module has 4 learning activities — complete all of them.</p>
+    <div class="la-grid">
+      <a class="la-card" href="https://dsuonline.instructure.com/courses/3116/assignments/39874?module_item_id=147354" target="_blank">
+        <div class="la-num">1</div>
+        <div>
+          <p class="la-title">Convert to SPSS</p>
+          <p class="la-desc">Go to activity →</p>
+        </div>
+      </a>
+      <a class="la-card" href="https://dsuonline.instructure.com/courses/3116/assignments/39878?module_item_id=147355" target="_blank">
+        <div class="la-num">2</div>
+        <div>
+          <p class="la-title">Split File – Gender</p>
+          <p class="la-desc">Go to activity →</p>
+        </div>
+      </a>
+      <a class="la-card" href="https://dsuonline.instructure.com/courses/3116/assignments/39884?module_item_id=147356" target="_blank">
+        <div class="la-num">3</div>
+        <div>
+          <p class="la-title">Select Case – Education Major Only</p>
+          <p class="la-desc">Go to activity →</p>
+        </div>
+      </a>
+      <a class="la-card" href="https://dsuonline.instructure.com/courses/3116/assignments/39886?module_item_id=147357" target="_blank">
+        <div class="la-num">4</div>
+        <div>
+          <p class="la-title">Grouped Frequency – Re-coding</p>
+          <p class="la-desc">Go to activity →</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="assess-single">
+      <div class="sec-eyebrow" style="margin-top: 1rem; margin-bottom: 0.5rem;">📖 &nbsp;Chapter Reading</div>
+      <a class="assess-card cr" href="https://dsuonline.instructure.com/courses/3116/assignments/39872?module_item_id=147358" target="_blank">
+        <div class="assess-icon cr">📖</div>
+        <div>
+          <p class="assess-title cr">Chapter Reading</p>
+          <p class="assess-desc cr">Go to assignment →</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- READINGS -->
+  <div class="section-card">
+    <div class="sec-eyebrow">📚 &nbsp;Required readings &amp; downloads</div>
+    <div class="reading-list">
+      <div class="reading-item">
+        <span class="reading-icon">📄</span>
+        <div>
+          <div>Download: <a href="https://dsuonline.instructure.com/courses/3116/files/242217/preview" target="_blank">Types_of_Scales.pdf</a></div>
+          <div style="font-size: 12px; color: #666; margin-top: 2px;">Learn the 4 types of scales: Nominal, Ordinal, Interval, and Ratio</div>
+        </div>
+      </div>
+      <div class="reading-item">
+        <span class="reading-icon">📄</span>
+        <div>
+          <div>Download: <a href="https://dsuonline.instructure.com/courses/3116/files/242218/preview" target="_blank">Quantitative Research Design &amp; Data Analysis.pdf</a></div>
+          <div class="reading-note">📌 This document covers Modules 4, 5, and 6</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="tip-bar">
+    💡 &nbsp;<span>This is a <strong>series of videos</strong> — extremely helpful for understanding the fundamentals of statistics. Watch all parts before completing your activities.</span>
+  </div>
+
+  <div class="videos-eyebrow">▶️ &nbsp;Video to watch</div>
+  <div class="video-card">
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/MXaJ7sa7q-8"
+        title="Basic Statistics – Video Series"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+    <div class="video-info">
+      <p class="video-title">Basic Statistics — Video Series</p>
+      <p class="video-meta">YouTube &nbsp;·&nbsp; Series of videos on statistics fundamentals</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
