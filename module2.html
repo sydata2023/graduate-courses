@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EDUC 833 – Module 2: Mixed Methods Research: Core Designs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; padding: 2rem 1rem; color: #1a1a1a; }
+    .mp { max-width: 860px; margin: 0 auto; }
+
+    .mod-header { background: #1a2744; border-radius: 12px; padding: 1.75rem 2rem; margin-bottom: 1.5rem; }
+    .course-brand { font-size: 11px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: #7eb3f0; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 0.5px solid #2a3a5c; }
+    .course-brand span { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-transform: none; color: #b8d0f0; margin-left: 8px; }
+    .mod-header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 0.9rem; }
+    .mod-badge { background: #7eb3f0; color: #0a1628; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 13px; border-radius: 20px; white-space: nowrap; }
+    .mod-weeks { font-size: 11px; color: #7eb3f0; border: 0.5px solid #7eb3f0; padding: 4px 10px; border-radius: 20px; white-space: nowrap; margin-left: auto; }
+    .mod-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: #f0f4ff; margin: 0 0 5px; line-height: 1.3; }
+    .mod-subtitle { font-size: 13px; color: #8fa8c8; margin: 0; }
+
+    .section-card { background: #ffffff; border: 0.5px solid #e0e0e0; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+    .sec-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 0.75rem; }
+    .sec-body { font-size: 13px; color: #444; line-height: 1.75; }
+
+    .assessment-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 0.75rem; }
+    .assess-card { border-radius: 10px; padding: 1rem; display: flex; align-items: flex-start; gap: 10px; text-decoration: none; transition: opacity 0.15s; }
+    .assess-card:hover { opacity: 0.82; }
+    .assess-card.la { background: #E6F1FB; }
+    .assess-card.cr { background: #E1F5EE; }
+    .assess-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .assess-icon.la { background: #185FA5; color: #fff; }
+    .assess-icon.cr { background: #0F6E56; color: #fff; }
+    .assess-title { font-size: 13px; font-weight: 500; margin: 0 0 3px; }
+    .assess-title.la { color: #0C447C; }
+    .assess-title.cr { color: #085041; }
+    .assess-desc { font-size: 11px; margin: 0; }
+    .assess-desc.la { color: #185FA5; }
+    .assess-desc.cr { color: #0F6E56; }
+
+    .reading-list { margin-top: 0.75rem; display: flex; flex-direction: column; gap: 8px; }
+    .reading-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #f8f8f8; border-radius: 8px; font-size: 13px; color: #333; }
+    .reading-icon { font-size: 18px; flex-shrink: 0; }
+
+    .tip-bar { background: #FAEEDA; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #633806; margin-bottom: 1.25rem; }
+
+    .videos-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 0.75rem; }
+    .video-card { background: #ffffff; border: 0.5px solid #e0e0e0; border-radius: 12px; overflow: hidden; margin-bottom: 1.25rem; }
+    .video-embed { width: 100%; aspect-ratio: 16/9; }
+    .video-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+    .video-info { padding: 10px 12px; }
+    .video-title { font-size: 12px; font-weight: 500; color: #1a1a1a; margin: 0 0 3px; line-height: 1.4; }
+    .video-meta { font-size: 11px; color: #888; margin: 0; }
+
+    @media (max-width: 600px) {
+      .assessment-row { grid-template-columns: 1fr; }
+      .mod-header-top { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+<div class="mp">
+
+  <div class="mod-header">
+    <div class="course-brand">
+      EDUC 833 &nbsp;·&nbsp;<span>Dr. Yoon's Applied Assessment in Educational Research</span>
+    </div>
+    <div class="mod-header-top">
+      <div class="mod-badge">Module 2</div>
+      <div class="mod-weeks">Week 2</div>
+    </div>
+    <h1 class="mod-title">Mixed Methods Research: Core Designs</h1>
+    <p class="mod-subtitle">Integration of quantitative and qualitative strands, design strategies, and quality standards</p>
+  </div>
+
+  <div class="section-card">
+    <div class="sec-eyebrow">ℹ️ &nbsp;Overview</div>
+    <p class="sec-body">Welcome to this module! In this module, you will continue to learn about the key concepts of mixed methods research. Mixed methods research has the potential to advance theory and enhance the usefulness of research findings. However, the success of a mixed-methods research inquiry is tied to how well researchers integrate the quantitative and qualitative strands, and to how well researchers address the standards for quality in quantitative, qualitative, and mixed methods. In the learning activity, you will learn core designs of mixed methods research, and practice some strategies, allowing you to effectively represent your study.</p>
+    <div style="margin-top: 1.25rem;">
+      <div class="sec-eyebrow" style="margin-bottom: 0.5rem;">✅ &nbsp;Assessments for this module</div>
+      <div class="assessment-row">
+        <a class="assess-card la" href="https://dsuonline.instructure.com/courses/3116/discussion_topics/28718?module_item_id=147295" target="_blank">
+          <div class="assess-icon la">✏️</div>
+          <div>
+            <p class="assess-title la">Learning Activity</p>
+            <p class="assess-desc la">Go to assignment →</p>
+          </div>
+        </a>
+        <a class="assess-card cr" href="https://dsuonline.instructure.com/courses/3116/assignments/39867?module_item_id=147294" target="_blank">
+          <div class="assess-icon cr">📖</div>
+          <div>
+            <p class="assess-title cr">Read &amp; Review</p>
+            <p class="assess-desc cr">Go to assignment →</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="sec-eyebrow">📚 &nbsp;Required readings</div>
+    <div class="reading-list">
+      <div class="reading-item">
+        <span class="reading-icon">📄</span>
+        <span>Creswell &amp; Clark (2017) — <strong>Chapter 3:</strong> Choosing a Mixed Methods Design</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-bar">
+    💡 &nbsp;<span>Watch the video before starting your learning activity — it walks through the core mixed methods design types you'll apply in your assignment.</span>
+  </div>
+
+  <div class="videos-eyebrow">▶️ &nbsp;Video to watch</div>
+  <div class="video-card">
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/eelVbCbhIXM"
+        title="Basic Mixed Methods Research Designs"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+    <div class="video-info">
+      <p class="video-title">Basic Mixed Methods Research Designs</p>
+      <p class="video-meta">YouTube &nbsp;·&nbsp; 26:44</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
