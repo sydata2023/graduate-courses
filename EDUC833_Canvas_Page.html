@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EDUC 833 – Applied Assessment in Educational Research</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f5f5;
+      padding: 2rem 1rem;
+      color: #1a1a1a;
+    }
+
+    .cp {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* HERO */
+    .hero {
+      background: #1a2744;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .course-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #7eb3f0;
+      border: 0.5px solid #7eb3f0;
+      padding: 4px 10px;
+      border-radius: 20px;
+      width: fit-content;
+      margin-bottom: 0.75rem;
+    }
+
+    .course-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #f0f4ff;
+      line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+
+    .course-sub {
+      font-size: 13px;
+      color: #8fa8c8;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .hero-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #8fa8c8;
+    }
+
+    .meta-item .icon {
+      font-size: 14px;
+      width: 16px;
+      text-align: center;
+      color: #7eb3f0;
+    }
+
+    .meta-item strong {
+      color: #c8d8f0;
+      font-weight: 500;
+    }
+
+    .video-wrap { display: flex; flex-direction: column; }
+
+    .video-container {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 0.5px solid #2a3a5c;
+    }
+
+    .video-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .video-label {
+      font-size: 11px;
+      color: #4a6080;
+      margin-top: 6px;
+      text-align: center;
+    }
+
+    /* THREE PILLARS */
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    .pill-card {
+      background: #ffffff;
+      border: 0.5px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .pill-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.6rem;
+      font-size: 20px;
+    }
+
+    .pill-icon.bl { background: #E6F1FB; color: #185FA5; }
+    .pill-icon.tl { background: #E1F5EE; color: #0F6E56; }
+    .pill-icon.pu { background: #EEEDFE; color: #534AB7; }
+
+    .pill-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .pill-desc {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    /* DESCRIPTION */
+    .desc-section {
+      border: 0.5px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      background: #ffffff;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 0.75rem;
+    }
+
+    .desc-text {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    /* SLOs */
+    .slo-section {
+      background: #f8f8f8;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 0.5px solid #e0e0e0;
+    }
+
+    .slo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .slo-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .slo-check {
+      color: #185FA5;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* BOTTOM ROW */
+    .bottom-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .info-card {
+      background: #ffffff;
+      border: 0.5px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+    }
+
+    .instructor-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #185FA5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .inst-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 2px;
+    }
+
+    .inst-role {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    .inst-contact {
+      border-top: 0.5px solid #e0e0e0;
+      padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .inst-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: #555;
+    }
+
+    .text-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 7px;
+      line-height: 1.5;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hero-body { grid-template-columns: 1fr; }
+      .three-col { grid-template-columns: 1fr; }
+      .slo-grid { grid-template-columns: 1fr; }
+      .bottom-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="cp">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="course-tag">EDUC 833 &nbsp;·&nbsp; CRN: 41025 &nbsp;·&nbsp; 3 Credits</div>
+      <h1 class="course-title">Applied Assessment in Educational Research</h1>
+      <p class="course-sub">Quantitative, qualitative, and mixed method data analytics for doctoral researchers and education leaders.</p>
+    </div>
+    <div class="hero-body">
+      <div class="meta-row">
+        <div class="meta-item"><span class="icon">🏛</span><span><strong>Institution:</strong> Delaware State University</span></div>
+        <div class="meta-item"><span class="icon">💻</span><span><strong>Format:</strong> Online · Canvas LMS</span></div>
+        <div class="meta-item"><span class="icon">📖</span><span><strong>Text:</strong> Creswell &amp; Clark (2017), 3rd Ed.</span></div>
+        <div class="meta-item"><span class="icon">🔧</span><span><strong>Software:</strong> SPSS + NVivo</span></div>
+        <div class="meta-item"><span class="icon">👤</span><span><strong>Instructor:</strong> Dr. Sae Yeol Yoon</span></div>
+        <div class="meta-item"><span class="icon">✉️</span><span>syoon@desu.edu &nbsp;·&nbsp; Ext. 6726</span></div>
+      </div>
+      <div class="video-wrap">
+        <div class="video-container">
+          <iframe
+            src="https://www.youtube.com/embed/kFNdtUnzeyI"
+            title="EDUC 833 Course Introduction by Dr. Sae Yeol Yoon"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <p class="video-label">Course introduction · Dr. Sae Yeol Yoon</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THREE PILLARS -->
+  <div class="three-col">
+    <div class="pill-card">
+      <div class="pill-icon bl">📊</div>
+      <p class="pill-title">Quantitative analysis</p>
+      <p class="pill-desc">Descriptive stats, t-test, ANOVA, regression, chi-square via SPSS</p>
+    </div>
+    <div class="pill-card">
+      <div class="pill-icon tl">💬</div>
+      <p class="pill-title">Qualitative inquiry</p>
+      <p class="pill-desc">Transcription, coding, thematic analysis via NVivo</p>
+    </div>
+    <div class="pill-card">
+      <div class="pill-icon pu">🔀</div>
+      <p class="pill-title">Mixed methods design</p>
+      <p class="pill-desc">Core &amp; complex design paradigms integrating both strands</p>
+    </div>
+  </div>
+
+  <!-- COURSE DESCRIPTION -->
+  <div class="desc-section">
+    <p class="eyebrow">Course description</p>
+    <p class="desc-text">Education institutions must assess varied and extensive information to gauge institutional effectiveness and generate data-based decisions. This course helps students plan, design, and conduct diverse mixed-methods research on complicated issues in education — and solidify the data foundation needed for their capstone experience. Upon completion, students will select a preliminary capstone option and submit their decision to the School of Graduate Studies and Research.</p>
+  </div>
+
+  <!-- SLOs -->
+  <div class="slo-section">
+    <p class="eyebrow">Student learning outcomes</p>
+    <div class="slo-grid">
+      <div class="slo-item"><span class="slo-check">✓</span><span>Effectively communicate mixed methods research concepts (SLO 1)</span></div>
+      <div class="slo-item"><span class="slo-check">✓</span><span>Apply descriptive and inferential statistics to analyze numeric data (SLO 2)</span></div>
+      <div class="slo-item"><span class="slo-check">✓</span><span>Develop codes, identify themes and patterns in non-numeric data (SLO 3)</span></div>
+      <div class="slo-item"><span class="slo-check">✓</span><span>Design and visualize empirical mixed methods research studies (SLO 4)</span></div>
+      <div class="slo-item"><span class="slo-check">✓</span><span>Evaluate published research using four complex mixed methods designs (SLO 5)</span></div>
+      <div class="slo-item"><span class="slo-check">✓</span><span>Apply ethical standards in social and educational research practice (SLO 6)</span></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM ROW -->
+  <div class="bottom-row">
+    <div class="info-card">
+      <p class="eyebrow">Instructor</p>
+      <div class="instructor-row">
+        <div class="avatar">SY</div>
+        <div>
+          <p class="inst-name">Dr. Sae Yeol Yoon</p>
+          <p class="inst-role">Professor of Science Education<br>Education Department, DSU</p>
+        </div>
+      </div>
+      <div class="inst-contact">
+        <div class="inst-contact-item">✉️ &nbsp;syoon@desu.edu</div>
+        <div class="inst-contact-item">📞 &nbsp;Ext. 6726</div>
+        <div class="inst-contact-item">🕐 &nbsp;Office hours posted on Canvas</div>
+      </div>
+    </div>
+    <div class="info-card">
+      <p class="eyebrow">Course structure</p>
+      <div class="text-item">📋 &nbsp;Eight learning modules across 6 weeks, each with overview, videos, readings, and learning activities</div>
+      <div class="text-item">💯 &nbsp;100% online learning activities — discussion boards, formative assessments, and group work</div>
+      <div class="text-item">🏅 &nbsp;Aligns with NELP, CAEP, ISTE, and CAS accreditation standards</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
