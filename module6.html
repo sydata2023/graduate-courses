@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EDUC 833 – Module 6: Quantitative Data Analysis III</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; padding: 2rem 1rem; color: #1a1a1a; }
+    .mp { max-width: 860px; margin: 0 auto; }
+
+    .mod-header { background: #1a2744; border-radius: 12px; padding: 1.75rem 2rem; margin-bottom: 1.5rem; }
+    .course-brand { font-size: 11px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: #7eb3f0; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 0.5px solid #2a3a5c; }
+    .course-brand span { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-transform: none; color: #b8d0f0; margin-left: 8px; }
+    .mod-header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 0.9rem; }
+    .mod-badge { background: #7eb3f0; color: #0a1628; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 13px; border-radius: 20px; white-space: nowrap; }
+    .mod-weeks { font-size: 11px; color: #7eb3f0; border: 0.5px solid #7eb3f0; padding: 4px 10px; border-radius: 20px; white-space: nowrap; margin-left: auto; }
+    .mod-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: #f0f4ff; margin: 0 0 5px; line-height: 1.3; }
+    .mod-subtitle { font-size: 13px; color: #8fa8c8; margin: 0; }
+
+    .section-card { background: #ffffff; border: 0.5px solid #e0e0e0; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+    .sec-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 0.75rem; }
+    .sec-body { font-size: 13px; color: #444; line-height: 1.75; }
+
+    /* Concept cards */
+    .concepts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 1rem; }
+    .concept-card { border-radius: 10px; padding: 1rem; }
+    .concept-card.co { background: #E6F1FB; }
+    .concept-card.re { background: #EEEDFE; }
+    .concept-card.ch { background: #E1F5EE; }
+    .concept-title { font-size: 12px; font-weight: 600; margin-bottom: 5px; }
+    .concept-title.co { color: #0C447C; }
+    .concept-title.re { color: #3C3489; }
+    .concept-title.ch { color: #085041; }
+    .concept-desc { font-size: 11px; line-height: 1.55; }
+    .concept-desc.co { color: #185FA5; }
+    .concept-desc.re { color: #534AB7; }
+    .concept-desc.ch { color: #0F6E56; }
+    .concept-highlight { background: rgba(255,255,255,0.6); border-radius: 4px; padding: 2px 5px; font-style: italic; }
+
+    /* Learning activities */
+    .la-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 0.75rem; }
+    .la-card { background: #E6F1FB; border-radius: 10px; padding: 0.9rem 1rem; display: flex; align-items: flex-start; gap: 10px; text-decoration: none; transition: opacity 0.15s; }
+    .la-card:hover { opacity: 0.82; }
+    .la-num { width: 28px; height: 28px; border-radius: 50%; background: #185FA5; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .la-title { font-size: 12px; font-weight: 500; color: #0C447C; margin: 0 0 2px; }
+    .la-desc { font-size: 11px; color: #185FA5; margin: 0; }
+
+    .assess-card { border-radius: 10px; padding: 1rem; display: flex; align-items: flex-start; gap: 10px; text-decoration: none; transition: opacity 0.15s; margin-top: 0.75rem; }
+    .assess-card:hover { opacity: 0.82; }
+    .assess-card.cr { background: #E1F5EE; }
+    .assess-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .assess-icon.cr { background: #0F6E56; color: #fff; }
+    .assess-title { font-size: 13px; font-weight: 500; margin: 0 0 3px; }
+    .assess-title.cr { color: #085041; }
+    .assess-desc { font-size: 11px; margin: 0; }
+    .assess-desc.cr { color: #0F6E56; }
+
+    /* Additional resources */
+    .resources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 0.75rem; }
+    .resource-card { background: #f8f8f8; border: 0.5px solid #e0e0e0; border-radius: 10px; padding: 0.9rem 1rem; text-decoration: none; transition: background 0.15s; display: flex; flex-direction: column; gap: 6px; }
+    .resource-card:hover { background: #f0f0f0; }
+    .resource-num { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #888; }
+    .resource-title { font-size: 12px; font-weight: 500; color: #185FA5; line-height: 1.4; }
+    .resource-arrow { font-size: 11px; color: #888; }
+
+    /* Videos */
+    .videos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
+    .video-card { background: #ffffff; border: 0.5px solid #e0e0e0; border-radius: 12px; overflow: hidden; }
+    .video-embed { width: 100%; aspect-ratio: 16/9; }
+    .video-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+    .video-info { padding: 10px 12px; }
+    .video-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 5px; }
+    .video-label.v1 { background: #E6F1FB; color: #185FA5; }
+    .video-label.v2 { background: #EEEDFE; color: #534AB7; }
+    .video-title { font-size: 12px; font-weight: 500; color: #1a1a1a; margin: 0 0 3px; line-height: 1.4; }
+    .video-meta { font-size: 11px; color: #888; margin: 0; }
+
+    .videos-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 0.75rem; }
+    .tip-bar { background: #FAEEDA; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #633806; margin-bottom: 1.25rem; }
+
+    @media (max-width: 600px) {
+      .concepts-grid, .resources-grid { grid-template-columns: 1fr; }
+      .la-grid, .videos-grid { grid-template-columns: 1fr; }
+      .mod-header-top { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+<div class="mp">
+
+  <div class="mod-header">
+    <div class="course-brand">
+      EDUC 833 &nbsp;·&nbsp;<span>Dr. Yoon's Applied Assessment in Educational Research</span>
+    </div>
+    <div class="mod-header-top">
+      <div class="mod-badge">Module 6</div>
+      <div class="mod-weeks">Week 6</div>
+    </div>
+    <h1 class="mod-title">Quantitative Data Analysis III</h1>
+    <p class="mod-subtitle">Correlation, regression, and chi-square analysis with SPSS</p>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section-card">
+    <div class="sec-eyebrow">ℹ️ &nbsp;Overview</div>
+    <p class="sec-body">Welcome to this module! In this learning module, you will learn how to analyze quantitative data, focusing on correlation and regression analysis with SPSS. In addition to these two analyses, you will learn how to analyze categorical data with SPSS.</p>
+    <div class="concepts-grid">
+      <div class="concept-card co">
+        <p class="concept-title co">📈 Correlation Analysis</p>
+        <p class="concept-desc co">Used to quantify <span class="concept-highlight">the association between two continuous variables</span> — e.g., between an independent and dependent variable.</p>
+      </div>
+      <div class="concept-card re">
+        <p class="concept-title re">📉 Regression Analysis</p>
+        <p class="concept-desc re">Assesses <span class="concept-highlight">the relationship between an outcome variable and one or more predictors</span>. Dependent variable = "y"; independent = "x".</p>
+      </div>
+      <div class="concept-card ch">
+        <p class="concept-title ch">🔢 Chi-Square Test</p>
+        <p class="concept-desc ch">Used for testing <span class="concept-highlight">relationships between categorical variables</span>. Null hypothesis: no relationship exists between variables.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASSESSMENTS -->
+  <div class="section-card">
+    <div class="sec-eyebrow">✅ &nbsp;Assessments for this module</div>
+    <p style="font-size: 12px; color: #888; margin-bottom: 0.75rem;">This module has 4 learning activities — complete all of them.</p>
+    <div class="la-grid">
+      <a class="la-card" href="https://dsuonline.instructure.com/courses/3116/assignments/39875?module_item_id=147374" target="_blank">
+        <div class="la-num">1</div>
+        <div>
+          <p class="la-title">Bivariate Pearson Correlation</p>
+          <p class="la-desc">Go to activity →</p>
+        </div>
+      </a>
+      <a class="la-card" href="https://dsuonline.instructure.com/courses/3116/assignments/39879?module_item_id=147375" target="_blank">
+        <div class="la-num">2</div>
+        <div>
+          <p class="la-title">Simple Linear Regression</p>
+          <p class="la-desc">Go to activity →</p>
+        </div>
+      </a>
+      <a class="la-card" href="https://dsuonline.instructure.com/courses/3116/assignments/39882?module_item_id=147376" target="_blank">
+        <div class="la-num">3</div>
+        <div>
+          <p class="la-title">Chi-Square Test of Independence</p>
+          <p class="la-desc">Go to activity →</p>
+        </div>
+      </a>
+      <a class="la-card" href="https://dsuonline.instructure.com/courses/3116/assignments/39888?module_item_id=147377" target="_blank">
+        <div class="la-num">4</div>
+        <div>
+          <p class="la-title">Report Statistics in APA</p>
+          <p class="la-desc">Go to activity →</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="sec-eyebrow" style="margin-top: 1rem; margin-bottom: 0.25rem;">📖 &nbsp;Chapter Reading</div>
+    <a class="assess-card cr" href="https://dsuonline.instructure.com/courses/3116/assignments/39870?module_item_id=147381" target="_blank">
+      <div class="assess-icon cr">📖</div>
+      <div>
+        <p class="assess-title cr">Chapter Reading</p>
+        <p class="assess-desc cr">Go to assignment →</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- ADDITIONAL RESOURCES -->
+  <div class="section-card">
+    <div class="sec-eyebrow">📎 &nbsp;Additional resources</div>
+    <div class="resources-grid">
+      <a class="resource-card" href="https://dsuonline.instructure.com/courses/3116/modules/items/147378" target="_blank">
+        <span class="resource-num">Resource I</span>
+        <span class="resource-title">Summary Reading</span>
+        <span class="resource-arrow">Open resource →</span>
+      </a>
+      <a class="resource-card" href="https://dsuonline.instructure.com/courses/3116/modules/items/147379" target="_blank">
+        <span class="resource-num">Resource II</span>
+        <span class="resource-title">Which Statistics is Needed for My Study?</span>
+        <span class="resource-arrow">Open resource →</span>
+      </a>
+      <a class="resource-card" href="https://dsuonline.instructure.com/courses/3116/modules/items/147380" target="_blank">
+        <span class="resource-num">Resource III</span>
+        <span class="resource-title">Weblink: Calculate the Effect Size</span>
+        <span class="resource-arrow">Open resource →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- VIDEOS -->
+  <div class="tip-bar">
+    💡 &nbsp;<span>Watch both videos before starting your learning activities. They walk through correlation, regression, and chi-square in SPSS step by step.</span>
+  </div>
+
+  <div class="videos-eyebrow">▶️ &nbsp;Videos to watch</div>
+  <div class="videos-grid">
+    <div class="video-card">
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/xTpHD5WLuoA"
+          title="Video 1: Correlation & Regression in SPSS"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+      <div class="video-info">
+        <div class="video-label v1">Video 1</div>
+        <p class="video-title">Correlation &amp; Regression in SPSS</p>
+        <p class="video-meta">YouTube</p>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/b3o_hjWKgQw"
+          title="Video 2: Chi-Square Test in SPSS"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+      <div class="video-info">
+        <div class="video-label v2">Video 2</div>
+        <p class="video-title">Chi-Square Test in SPSS</p>
+        <p class="video-meta">YouTube</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
