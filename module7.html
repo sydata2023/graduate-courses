@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EDUC 833 – Module 7: Qualitative Data Analysis I</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; padding: 2rem 1rem; color: #1a1a1a; }
+    .mp { max-width: 860px; margin: 0 auto; }
+
+    .mod-header { background: #1a2744; border-radius: 12px; padding: 1.75rem 2rem; margin-bottom: 1.5rem; }
+    .course-brand { font-size: 11px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: #7eb3f0; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 0.5px solid #2a3a5c; }
+    .course-brand span { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-transform: none; color: #b8d0f0; margin-left: 8px; }
+    .mod-header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 0.9rem; }
+    .mod-badge { background: #7eb3f0; color: #0a1628; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 13px; border-radius: 20px; white-space: nowrap; }
+    .mod-weeks { font-size: 11px; color: #7eb3f0; border: 0.5px solid #7eb3f0; padding: 4px 10px; border-radius: 20px; white-space: nowrap; margin-left: auto; }
+    .mod-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: #f0f4ff; margin: 0 0 5px; line-height: 1.3; }
+    .mod-subtitle { font-size: 13px; color: #8fa8c8; margin: 0; }
+
+    .section-card { background: #ffffff; border: 0.5px solid #e0e0e0; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+    .sec-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 0.75rem; }
+    .sec-body { font-size: 13px; color: #444; line-height: 1.75; }
+
+    /* Share Your Idea card */
+    .share-card { background: #EEEDFE; border-radius: 10px; padding: 1rem; display: flex; align-items: flex-start; gap: 10px; margin-top: 0.75rem; }
+    .share-icon { width: 36px; height: 36px; border-radius: 50%; background: #534AB7; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .share-title { font-size: 13px; font-weight: 500; color: #3C3489; margin: 0 0 2px; }
+    .share-desc { font-size: 11px; color: #534AB7; margin: 0; }
+
+    /* Learning activities */
+    .la-list { display: flex; flex-direction: column; gap: 10px; margin-top: 0.75rem; }
+    .la-card { background: #E6F1FB; border-radius: 10px; padding: 0.9rem 1rem; display: flex; align-items: center; gap: 12px; text-decoration: none; transition: opacity 0.15s; }
+    .la-card:hover { opacity: 0.82; }
+    .la-num { width: 32px; height: 32px; border-radius: 50%; background: #185FA5; color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .la-content { flex: 1; }
+    .la-label { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #185FA5; margin-bottom: 2px; }
+    .la-title { font-size: 13px; font-weight: 500; color: #0C447C; margin: 0; }
+    .la-arrow { font-size: 13px; color: #185FA5; flex-shrink: 0; }
+
+    .assess-card { border-radius: 10px; padding: 1rem; display: flex; align-items: flex-start; gap: 10px; text-decoration: none; transition: opacity 0.15s; margin-top: 0.75rem; }
+    .assess-card:hover { opacity: 0.82; }
+    .assess-card.cr { background: #E1F5EE; }
+    .assess-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .assess-icon.cr { background: #0F6E56; color: #fff; }
+    .assess-title { font-size: 13px; font-weight: 500; margin: 0 0 3px; }
+    .assess-title.cr { color: #085041; }
+    .assess-desc { font-size: 11px; margin: 0; }
+    .assess-desc.cr { color: #0F6E56; }
+
+    .tip-bar { background: #FAEEDA; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: #633806; margin-bottom: 1.25rem; }
+
+    .videos-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #888; margin-bottom: 0.75rem; }
+    .video-card { background: #ffffff; border: 0.5px solid #e0e0e0; border-radius: 12px; overflow: hidden; margin-bottom: 1.25rem; }
+    .video-embed { width: 100%; aspect-ratio: 16/9; }
+    .video-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+    .video-info { padding: 10px 12px; }
+    .video-title { font-size: 12px; font-weight: 500; color: #1a1a1a; margin: 0 0 3px; line-height: 1.4; }
+    .video-meta { font-size: 11px; color: #888; margin: 0; }
+
+    @media (max-width: 600px) { .mod-header-top { flex-wrap: wrap; } }
+  </style>
+</head>
+<body>
+<div class="mp">
+
+  <div class="mod-header">
+    <div class="course-brand">
+      EDUC 833 &nbsp;·&nbsp;<span>Dr. Yoon's Applied Assessment in Educational Research</span>
+    </div>
+    <div class="mod-header-top">
+      <div class="mod-badge">Module 7</div>
+      <div class="mod-weeks">Week 7</div>
+    </div>
+    <h1 class="mod-title">Qualitative Data Analysis I</h1>
+    <p class="mod-subtitle">Analyzing interview data — transcription, coding, and interpretation</p>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section-card">
+    <div class="sec-eyebrow">ℹ️ &nbsp;Overview</div>
+    <p class="sec-body">Welcome to this module! In this learning module, you will learn the fundamentals of how to analyze qualitative data. Specifically, you will learn how to analyze written texts, particularly interview data.</p>
+  </div>
+
+  <!-- ASSESSMENTS -->
+  <div class="section-card">
+    <div class="sec-eyebrow">✅ &nbsp;Assessments for this module</div>
+
+    <div class="sec-eyebrow" style="margin-bottom: 0.4rem;">💬 &nbsp;Share Your Idea</div>
+    <div class="share-card">
+      <div class="share-icon">💬</div>
+      <div>
+        <p class="share-title">Share Your Ideas</p>
+        <p class="share-desc">Reflect and share your thoughts on qualitative data analysis — posted in the course discussion</p>
+      </div>
+    </div>
+
+    <div class="sec-eyebrow" style="margin-top: 1.25rem; margin-bottom: 0.5rem;">✏️ &nbsp;Learning Activities — Interviews and Coding Practice</div>
+    <div class="la-list">
+      <a class="la-card" href="https://dsuonline.instructure.com/courses/3116/assignments/39877?module_item_id=147316" target="_blank">
+        <div class="la-num">1</div>
+        <div class="la-content">
+          <p class="la-label">Task 1</p>
+          <p class="la-title">Interview Data Analysis without Coding</p>
+        </div>
+        <span class="la-arrow">→</span>
+      </a>
+      <a class="la-card" href="https://dsuonline.instructure.com/courses/3116/assignments/39881?module_item_id=147317" target="_blank">
+        <div class="la-num">2</div>
+        <div class="la-content">
+          <p class="la-label">Task 2</p>
+          <p class="la-title">Learn How to Code</p>
+        </div>
+        <span class="la-arrow">→</span>
+      </a>
+      <a class="la-card" href="https://dsuonline.instructure.com/courses/3116/assignments/39885?module_item_id=147318" target="_blank">
+        <div class="la-num">3</div>
+        <div class="la-content">
+          <p class="la-label">Task 3</p>
+          <p class="la-title">Interview and Transcript</p>
+        </div>
+        <span class="la-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="sec-eyebrow" style="margin-top: 1.25rem; margin-bottom: 0.25rem;">📖 &nbsp;Chapter Reading</div>
+    <a class="assess-card cr" href="https://dsuonline.instructure.com/courses/3116/assignments/39871?module_item_id=147319" target="_blank">
+      <div class="assess-icon cr">📖</div>
+      <div>
+        <p class="assess-title cr">Chapter Reading</p>
+        <p class="assess-desc cr">Go to assignment →</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="tip-bar">
+    💡 &nbsp;<span>Watch the video before starting the learning activities — it walks through how to analyze interview data step by step.</span>
+  </div>
+
+  <div class="videos-eyebrow">▶️ &nbsp;Video to watch</div>
+  <div class="video-card">
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/59GsjhPolPs"
+        title="How to Analyze Interview Data"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+    <div class="video-info">
+      <p class="video-title">How to Analyze Interview Data</p>
+      <p class="video-meta">YouTube &nbsp;·&nbsp; Qualitative data analysis fundamentals</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
