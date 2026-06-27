@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EDUC 833 – Course Modules at a Glance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; padding: 2rem 1rem; color: #1a1a1a; }
+    .mp { max-width: 860px; margin: 0 auto; }
+
+    .mod-header { background: #1a2744; border-radius: 12px; padding: 1.75rem 2rem; margin-bottom: 1.5rem; }
+    .course-brand { font-size: 11px; font-weight: 500; letter-spacing: 0.13em; text-transform: uppercase; color: #7eb3f0; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 0.5px solid #2a3a5c; }
+    .course-brand span { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; text-transform: none; color: #b8d0f0; margin-left: 8px; }
+    .page-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: #f0f4ff; margin: 0 0 5px; }
+    .page-subtitle { font-size: 13px; color: #8fa8c8; margin: 0; }
+
+    .modules-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+    .tile { border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 10px; border: 0.5px solid transparent; }
+
+    .tile.t1 { background: #E6F1FB; border-color: #B5D4F4; }
+    .tile.t2 { background: #EEEDFE; border-color: #C8C5F8; }
+    .tile.t3 { background: #E1F5EE; border-color: #A8DFC8; }
+    .tile.t4 { background: #FEF3E6; border-color: #F5CFA0; }
+    .tile.t5 { background: #FDE8E8; border-color: #F5B8B8; }
+    .tile.t6 { background: #E8F8F0; border-color: #A8DFC0; }
+    .tile.t7 { background: #F0EAFD; border-color: #C8B8F5; }
+    .tile.t8 { background: #E6F4FB; border-color: #A8D0EE; }
+
+    .tile-top { display: flex; align-items: center; justify-content: space-between; }
+    .tile-num { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; }
+    .tile.t1 .tile-num { background: #185FA5; color: #fff; }
+    .tile.t2 .tile-num { background: #534AB7; color: #fff; }
+    .tile.t3 .tile-num { background: #0F6E56; color: #fff; }
+    .tile.t4 .tile-num { background: #B06000; color: #fff; }
+    .tile.t5 .tile-num { background: #B03030; color: #fff; }
+    .tile.t6 .tile-num { background: #0A6640; color: #fff; }
+    .tile.t7 .tile-num { background: #6030B0; color: #fff; }
+    .tile.t8 .tile-num { background: #1060A0; color: #fff; }
+
+    .tile-week { font-size: 10px; font-weight: 500; }
+    .tile.t1 .tile-week { color: #185FA5; }
+    .tile.t2 .tile-week { color: #534AB7; }
+    .tile.t3 .tile-week { color: #0F6E56; }
+    .tile.t4 .tile-week { color: #B06000; }
+    .tile.t5 .tile-week { color: #B03030; }
+    .tile.t6 .tile-week { color: #0A6640; }
+    .tile.t7 .tile-week { color: #6030B0; }
+    .tile.t8 .tile-week { color: #1060A0; }
+
+    .tile-icon { font-size: 26px; }
+
+    .tile-title { font-size: 13px; font-weight: 600; line-height: 1.35; }
+    .tile.t1 .tile-title { color: #0C447C; }
+    .tile.t2 .tile-title { color: #3C3489; }
+    .tile.t3 .tile-title { color: #085041; }
+    .tile.t4 .tile-title { color: #7A4000; }
+    .tile.t5 .tile-title { color: #7A1010; }
+    .tile.t6 .tile-title { color: #074D30; }
+    .tile.t7 .tile-title { color: #401880; }
+    .tile.t8 .tile-title { color: #0A3D70; }
+
+    .tile-tag { font-size: 10px; font-weight: 500; margin-top: auto; }
+    .tile.t1 .tile-tag { color: #185FA5; }
+    .tile.t2 .tile-tag { color: #534AB7; }
+    .tile.t3 .tile-tag { color: #0F6E56; }
+    .tile.t4 .tile-tag { color: #B06000; }
+    .tile.t5 .tile-tag { color: #B03030; }
+    .tile.t6 .tile-tag { color: #0A6640; }
+    .tile.t7 .tile-tag { color: #6030B0; }
+    .tile.t8 .tile-tag { color: #1060A0; }
+
+    @media (max-width: 600px) { .modules-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+<div class="mp">
+
+  <div class="mod-header">
+    <div class="course-brand">
+      EDUC 833 &nbsp;·&nbsp;<span>Dr. Yoon's Applied Assessment in Educational Research</span>
+    </div>
+    <h1 class="page-title">Course Modules at a Glance</h1>
+    <p class="page-subtitle">8 modules across 8 weeks — complete each module in order</p>
+  </div>
+
+  <div class="modules-grid">
+
+    <div class="tile t1">
+      <div class="tile-top">
+        <span class="tile-num">Module 1</span>
+        <span class="tile-week">Week 1</span>
+      </div>
+      <div class="tile-icon">🔀</div>
+      <p class="tile-title">Introduction to Mixed Methods Research</p>
+      <p class="tile-tag">Mixed Methods</p>
+    </div>
+
+    <div class="tile t2">
+      <div class="tile-top">
+        <span class="tile-num">Module 2</span>
+        <span class="tile-week">Week 2</span>
+      </div>
+      <div class="tile-icon">📐</div>
+      <p class="tile-title">Mixed Methods Research: Core Designs</p>
+      <p class="tile-tag">Mixed Methods</p>
+    </div>
+
+    <div class="tile t3">
+      <div class="tile-top">
+        <span class="tile-num">Module 3</span>
+        <span class="tile-week">Week 3</span>
+      </div>
+      <div class="tile-icon">🧩</div>
+      <p class="tile-title">Complex Applications of Mixed Methods</p>
+      <p class="tile-tag">Mixed Methods</p>
+    </div>
+
+    <div class="tile t4">
+      <div class="tile-top">
+        <span class="tile-num">Module 4</span>
+        <span class="tile-week">Week 4</span>
+      </div>
+      <div class="tile-icon">📊</div>
+      <p class="tile-title">Quantitative Data Analysis I: Basics &amp; SPSS</p>
+      <p class="tile-tag">Quantitative · SPSS</p>
+    </div>
+
+    <div class="tile t5">
+      <div class="tile-top">
+        <span class="tile-num">Module 5</span>
+        <span class="tile-week">Week 5</span>
+      </div>
+      <div class="tile-icon">📉</div>
+      <p class="tile-title">Quantitative Data Analysis II: T-test &amp; ANOVA</p>
+      <p class="tile-tag">Quantitative · SPSS</p>
+    </div>
+
+    <div class="tile t6">
+      <div class="tile-top">
+        <span class="tile-num">Module 6</span>
+        <span class="tile-week">Week 6</span>
+      </div>
+      <div class="tile-icon">📈</div>
+      <p class="tile-title">Quantitative Data Analysis III: Correlation &amp; Chi-Square</p>
+      <p class="tile-tag">Quantitative · SPSS</p>
+    </div>
+
+    <div class="tile t7">
+      <div class="tile-top">
+        <span class="tile-num">Module 7</span>
+        <span class="tile-week">Week 7</span>
+      </div>
+      <div class="tile-icon">💬</div>
+      <p class="tile-title">Qualitative Data Analysis I: Interview &amp; Coding</p>
+      <p class="tile-tag">Qualitative</p>
+    </div>
+
+    <div class="tile t8">
+      <div class="tile-top">
+        <span class="tile-num">Module 8</span>
+        <span class="tile-week">Week 8</span>
+      </div>
+      <div class="tile-icon">🖥️</div>
+      <p class="tile-title">Qualitative Data Analysis II: NVivo</p>
+      <p class="tile-tag">Qualitative · NVivo</p>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>
