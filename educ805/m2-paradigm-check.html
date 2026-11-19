@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which lens is this? · EDUC 805 Module 2</title>
+<style>
+  :root { --red:#A6192E; --red-d:#7A1222; --red-t:#FCEBEB; --blue:#9BCBEB; --blue-d:#0C447C; --blue-t:#EAF4FB;
+          --ink:#222; --muted:#5F5E5A; --line:#DCDFE3; --ok-t:#E7F4EC; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:14px; font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; color:var(--ink); background:#fff; }
+  h1 { font:bold 20px/1.3 Georgia,serif; color:var(--red-d); margin:0 0 4px; }
+  .lead { margin:0 0 10px; color:var(--muted); font-size:14.5px; }
+  .card { border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:10px; }
+  .card.done { border-left:5px solid var(--blue-d); }
+  .stmt { font-weight:600; margin:0 0 8px; }
+  .btns { display:flex; gap:8px; flex-wrap:wrap; }
+  button { font:inherit; font-size:14px; padding:6px 12px; border-radius:18px; border:1.5px solid var(--blue-d); background:#fff; color:var(--blue-d); cursor:pointer; }
+  button:hover:not(:disabled) { background:var(--blue-t); }
+  button:focus-visible { outline:3px solid var(--blue); outline-offset:2px; }
+  button:disabled { cursor:default; opacity:.55; }
+  button.picked { opacity:1; background:var(--blue-d); color:#fff; }
+  .fb { margin:8px 0 0; font-size:14.5px; padding:8px 10px; border-radius:8px; display:none; }
+  .fb.show { display:block; } .fb.right { background:var(--ok-t); } .fb.wrong { background:var(--red-t); }
+  .fb strong { display:block; margin-bottom:2px; }
+</style>
+</head>
+<body>
+<h1>Which lens is this?</h1>
+<p class="lead">Four leaders look at the same problem: rising absences among 9th graders. Which lens is each one using?</p>
+<div id="list"></div>
+<script>
+const LENS = { post:"Postpositivist", cons:"Constructivist", trans:"Transformative", prag:"Pragmatic" };
+const ITEMS = [
+  { s:"\"I want to measure how much absences dropped after we started morning check-ins, and compare it with a similar school.\"", a:"post",
+    why:"Measuring change and comparing groups to estimate an effect is the postpositivist lens." },
+  { s:"\"I want to hear how 9th graders who often miss school describe their days, in their own words.\"", a:"cons",
+    why:"Seeking people's own meanings and experiences is the constructivist lens." },
+  { s:"\"Our attendance policy was written without families. I want to work with families to change who has a say.\"", a:"trans",
+    why:"Naming power and working with the community for change is the transformative lens." },
+  { s:"\"I'll use whatever mix of numbers and conversations helps us decide what to try next semester.\"", a:"prag",
+    why:"Choosing methods by what answers the practical question is the pragmatic lens." },
+];
+const list = document.getElementById('list');
+ITEMS.forEach((it, i) => {
+  const c = document.createElement('div'); c.className = 'card';
+  c.innerHTML = `<p class="stmt" id="s${i}">${i+1}. ${it.s}</p>
+    <div class="btns" role="group" aria-labelledby="s${i}">
+      ${Object.entries(LENS).map(([k,l]) => `<button type="button" data-k="${k}">${l}</button>`).join('')}
+    </div><div class="fb" aria-live="polite"></div>`;
+  c.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const ok = b.dataset.k === it.a;
+    c.querySelectorAll('button').forEach(x => x.disabled = true);
+    b.classList.add('picked'); c.classList.add('done');
+    const fb = c.querySelector('.fb');
+    fb.className = 'fb show ' + (ok ? 'right' : 'wrong');
+    fb.innerHTML = `<strong>${ok ? 'Yes.' : 'Not quite. Best fit: ' + LENS[it.a] + '.'}</strong>${it.why}`;
+  }));
+  list.appendChild(c);
+});
+</script>
+</body>
+</html>

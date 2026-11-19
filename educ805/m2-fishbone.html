@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fishbone builder · EDUC 805 Module 2</title>
+<style>
+  :root { --red:#A6192E; --red-d:#7A1222; --red-t:#FCEBEB; --blue:#9BCBEB; --blue-d:#0C447C; --blue-t:#EAF4FB;
+          --ink:#222; --muted:#5F5E5A; --line:#DCDFE3; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:16px; font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; color:var(--ink); background:#fff; }
+  .wrap { max-width:1060px; margin:0 auto; }
+  h1 { font:bold 22px/1.3 Georgia,serif; color:var(--red-d); margin:0 0 4px; }
+  h2 { font:bold 17px/1.3 Georgia,serif; color:var(--red-d); margin:18px 0 6px; }
+  .lead { margin:0 0 10px; color:var(--muted); font-size:14.5px; }
+  label.big { display:block; font-weight:600; margin:0 0 4px; }
+  input[type=text], textarea { width:100%; font:inherit; padding:7px 9px; border:1px solid var(--line); border-radius:7px; }
+  textarea { resize:vertical; }
+  .cats { display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:10px; }
+  .cat { border:1px solid var(--line); border-radius:10px; padding:10px 12px; }
+  .cat input.catname { font-weight:700; color:var(--blue-d); border-style:dashed; margin-bottom:6px; }
+  .cause { margin-bottom:6px; }
+  .flags { display:flex; gap:14px; font-size:13px; color:var(--muted); margin-top:2px; }
+  .flags label { cursor:pointer; }
+  .bar { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+  button { font:inherit; font-size:14.5px; padding:7px 16px; border-radius:18px; border:1.5px solid var(--blue-d); background:#fff; color:var(--blue-d); cursor:pointer; }
+  button:hover { background:var(--blue-t); }
+  button:focus-visible, input:focus-visible, textarea:focus-visible { outline:3px solid var(--blue); outline-offset:2px; }
+  .primary { background:var(--red); border-color:var(--red); color:#fff; }
+  .primary:hover { background:var(--red-d); }
+  .diagram { border:1px solid var(--line); border-radius:10px; padding:8px; background:#fff; overflow-x:auto; }
+  .note { font-size:13.5px; color:var(--muted); margin:6px 0 0; min-height:1em; }
+  details { margin:8px 0 0; font-size:14.5px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Fishbone builder</h1>
+<p class="lead">Put your problem in the head, then list possible causes under each bone. Mark which causes are <strong>in your control</strong> and which are <strong>supported by data</strong>. Nothing is saved or sent: download your diagram before you close this tab.</p>
+
+<div class="bar">
+  <button type="button" id="example">Show an example</button>
+  <button type="button" id="clear">Start blank</button>
+</div>
+
+<label class="big" for="problem">Your problem (the fish's head), in one sentence</label>
+<textarea id="problem" rows="2" placeholder="Example: About a third of our 9th graders are chronically absent."></textarea>
+
+<h2>Possible causes</h2>
+<p class="lead">Rename any bone to fit your setting. One to three causes per bone is plenty; leave a box empty if it does not apply.</p>
+<div class="cats" id="cats"></div>
+
+<h2>Your diagram</h2>
+<div class="diagram"><svg id="fish" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" width="100%" role="img" aria-label="Fishbone diagram"></svg></div>
+<div class="bar">
+  <button type="button" class="primary" id="png">Download as image (PNG)</button>
+  <button type="button" id="copy">Copy as text</button>
+</div>
+<p class="note" id="note" aria-live="polite"></p>
+<details><summary>Can't download?</summary>Take a screenshot of the diagram, or use "Copy as text" and paste it into a document. Either is fine for Task 1.</details>
+</div>
+
+<script>
+const DEFAULT_CATS = ["Students","Families & community","Teachers & staff","Policies & schedules","Curriculum & instruction","Climate & resources"];
+const EXAMPLE = {
+  problem: "About a third of our 9th graders are chronically absent (fictional example).",
+  cats: [
+    ["Students", [["Feel behind after missing early weeks",0,1],["Weak connection to an adult at school",1,0],["",0,0]]],
+    ["Families & community", [["Older students caring for siblings",0,1],["Long bus rides from one neighborhood",0,1],["",0,0]]],
+    ["Teachers & staff", [["No follow-up call after 2 absences",1,1],["Few staff know 9th graders by name",1,0],["",0,0]]],
+    ["Policies & schedules", [["Late arrival counted as full absence",1,1],["Make-up work policy unclear",1,0],["",0,0]]],
+    ["Curriculum & instruction", [["Classes feel hard to re-enter",1,0],["",0,0],["",0,0]]],
+    ["Climate & resources", [["Students report not feeling safe",0,1],["",0,0],["",0,0]]],
+  ]
+};
+const catsEl = document.getElementById('cats');
+function buildForm() {
+  catsEl.innerHTML = '';
+  DEFAULT_CATS.forEach((name, i) => {
+    const d = document.createElement('div'); d.className = 'cat';
+    let h = `<input type="text" class="catname" id="cat${i}" value="${name}" aria-label="Bone ${i+1} name">`;
+    for (let j = 0; j < 3; j++) {
+      h += `<div class="cause"><input type="text" id="c${i}_${j}" aria-label="${name} cause ${j+1}" placeholder="Possible cause">
+        <div class="flags"><label><input type="checkbox" id="k${i}_${j}"> In my control</label>
+        <label><input type="checkbox" id="d${i}_${j}"> Supported by data</label></div></div>`;
+    }
+    d.innerHTML = h; catsEl.appendChild(d);
+  });
+  document.querySelectorAll('input,textarea').forEach(el => el.addEventListener('input', draw));
+}
+function read() {
+  return {
+    problem: document.getElementById('problem').value.trim(),
+    cats: DEFAULT_CATS.map((_, i) => ({
+      name: document.getElementById('cat'+i).value.trim() || ('Category ' + (i+1)),
+      causes: [0,1,2].map(j => ({ t: document.getElementById(`c${i}_${j}`).value.trim(),
+        k: document.getElementById(`k${i}_${j}`).checked, d: document.getElementById(`d${i}_${j}`).checked })).filter(c => c.t)
+    }))
+  };
+}
+function wrapText(s, n) {
+  const words = s.split(/\s+/); const lines = []; let cur = '';
+  words.forEach(w => { if ((cur + ' ' + w).trim().length > n) { if (cur) lines.push(cur); cur = w; } else cur = (cur + ' ' + w).trim(); });
+  if (cur) lines.push(cur); return lines;
+}
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function draw() {
+  const m = read();
+  const SPINE_Y = 270, XS = [330, 560, 790];
+  let s = `<rect x="0" y="0" width="1000" height="540" fill="#ffffff"/>`;
+  s += `<line x1="40" y1="${SPINE_Y}" x2="850" y2="${SPINE_Y}" stroke="#0C447C" stroke-width="4"/>`;
+  // head
+  const head = wrapText(m.problem || 'Your problem goes here', 20).slice(0, 7);
+  s += `<rect x="850" y="${SPINE_Y-95}" width="145" height="190" rx="10" fill="#FCEBEB" stroke="#A6192E" stroke-width="2"/>`;
+  head.forEach((l, i) => { s += `<text x="922" y="${SPINE_Y - (head.length-1)*9 + i*18 + 4}" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#7A1222">${esc(l)}</text>`; });
+  m.cats.forEach((c, i) => {
+    const top = i < 3, xb = XS[i % 3], yEnd = top ? 70 : 470, xEnd = xb - 130;
+    s += `<line x1="${xEnd}" y1="${yEnd}" x2="${xb}" y2="${SPINE_Y}" stroke="#0C447C" stroke-width="2.5"/>`;
+    const ly = top ? yEnd - 22 : yEnd + 14;
+    s += `<rect x="${xEnd-80}" y="${ly}" width="160" height="26" rx="13" fill="#EAF4FB" stroke="#9BCBEB"/>`;
+    s += `<text x="${xEnd}" y="${ly+17.5}" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#0C447C">${esc(c.name.slice(0,24))}</text>`;
+    c.causes.forEach((cz, j) => {
+      const t = [0.3, 0.55, 0.8][j], px = xEnd + 130*t, py = yEnd + (SPINE_Y - yEnd)*t;
+      s += `<line x1="${px-6}" y1="${py}" x2="${px}" y2="${py}" stroke="#0C447C" stroke-width="1.5"/>`;
+      const lines = wrapText(cz.t, 27).slice(0, 2);
+      const fill = cz.k ? '#A6192E' : '#222222', weight = cz.d ? '700' : '400';
+      lines.forEach((l, li) => {
+        const yy = py + 4 + (li - (lines.length-1)/2) * 14;
+        s += `<text x="${px-10}" y="${yy}" text-anchor="end" font-family="Arial, sans-serif" font-size="12" font-weight="${weight}" fill="${fill}">${esc(l)}</text>`;
+      });
+    });
+  });
+  // legend
+  s += `<text x="40" y="528" font-family="Arial, sans-serif" font-size="12" fill="#5F5E5A">Legend: </text>`;
+  s += `<text x="92" y="528" font-family="Arial, sans-serif" font-size="12" fill="#A6192E">red = in my control</text>`;
+  s += `<text x="222" y="528" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#222">bold = supported by data</text>`;
+  document.getElementById('fish').innerHTML = s;
+}
+function fill(ex) {
+  document.getElementById('problem').value = ex.problem;
+  ex.cats.forEach(([name, causes], i) => {
+    document.getElementById('cat'+i).value = name;
+    causes.forEach(([t,k,d], j) => {
+      document.getElementById(`c${i}_${j}`).value = t;
+      document.getElementById(`k${i}_${j}`).checked = !!k;
+      document.getElementById(`d${i}_${j}`).checked = !!d;
+    });
+  });
+  draw();
+}
+document.getElementById('example').addEventListener('click', () => fill(EXAMPLE));
+document.getElementById('clear').addEventListener('click', () => { buildForm(); document.getElementById('problem').value=''; draw(); });
+document.getElementById('png').addEventListener('click', () => {
+  const svg = document.getElementById('fish'); const note = document.getElementById('note');
+  const xml = new XMLSerializer().serializeToString(svg);
+  const img = new Image();
+  img.onload = () => {
+    const cv = document.createElement('canvas'); cv.width = 2000; cv.height = 1080;
+    const ctx = cv.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.drawImage(img, 0, 0, cv.width, cv.height);
+    try {
+      const a = document.createElement('a'); a.download = 'my-fishbone.png'; a.href = cv.toDataURL('image/png');
+      document.body.appendChild(a); a.click(); a.remove(); note.textContent = 'Downloaded my-fishbone.png.';
+    } catch (e) { note.textContent = 'Download was blocked. Take a screenshot instead.'; }
+  };
+  img.onerror = () => { note.textContent = 'Download did not work here. Take a screenshot instead.'; };
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml);
+});
+document.getElementById('copy').addEventListener('click', async () => {
+  const m = read(); const note = document.getElementById('note');
+  let t = 'FISHBONE\nProblem: ' + (m.problem || '(not yet written)') + '\n';
+  m.cats.forEach(c => {
+    if (!c.causes.length) return;
+    t += '\n' + c.name + ':\n' + c.causes.map(x => `- ${x.t}${x.k ? ' [in my control]' : ''}${x.d ? ' [supported by data]' : ''}`).join('\n') + '\n';
+  });
+  try { await navigator.clipboard.writeText(t); note.textContent = 'Copied. Paste it into your document.'; }
+  catch (e) { note.textContent = 'Copy was blocked here. Use the download button or a screenshot.'; }
+});
+buildForm();
+if (location.hash === '#example') fill(EXAMPLE); else draw();
+</script>
+</body>
+</html>
