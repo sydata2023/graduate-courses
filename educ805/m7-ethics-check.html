@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insider ethics check · EDUC 805 Module 7</title>
+<style>
+  :root { --red:#A6192E; --red-d:#7A1222; --red-t:#FCEBEB; --blue:#9BCBEB; --blue-d:#0C447C; --blue-t:#EAF4FB;
+          --ink:#222; --muted:#5F5E5A; --line:#DCDFE3; --ok-t:#E7F4EC; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:14px; font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; color:var(--ink); background:#fff; }
+  h1 { font:bold 20px/1.3 Georgia,serif; color:var(--red-d); margin:0 0 4px; }
+  .lead { margin:0 0 10px; color:var(--muted); font-size:14.5px; }
+  .card { border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:10px; }
+  .card.done { border-left:5px solid var(--blue-d); }
+  .stmt { font-weight:600; margin:0 0 8px; }
+  .btns { display:flex; gap:8px; flex-wrap:wrap; }
+  button { font:inherit; font-size:14px; padding:6px 12px; border-radius:18px; border:1.5px solid var(--blue-d); background:#fff; color:var(--blue-d); cursor:pointer; }
+  button:hover:not(:disabled) { background:var(--blue-t); }
+  button:focus-visible { outline:3px solid var(--blue); outline-offset:2px; }
+  button:disabled { cursor:default; opacity:.55; }
+  button.picked { opacity:1; background:var(--blue-d); color:#fff; }
+  .fb { margin:8px 0 0; font-size:14.5px; padding:8px 10px; border-radius:8px; display:none; }
+  .fb.show { display:block; } .fb.right { background:var(--ok-t); } .fb.wrong { background:var(--red-t); }
+  .fb strong { display:block; margin-bottom:2px; }
+  .note { font-size:13px; color:var(--muted); margin:4px 0 0; }
+</style>
+</head>
+<body>
+<h1>Insider ethics check</h1>
+<p class="lead">Five made-up plans by school leaders studying their own workplace. As described, how would you rate each one?</p>
+<div id="list"></div>
+<p class="note">For practice only. Your IRB makes the real decision about any study.</p>
+<script>
+const R = { ok:"Lower risk", fix:"Needs a safeguard", no:"Not appropriate as described" };
+const ITEMS = [
+  { s:"An assistant principal plans to use attendance rates already reported to the school board, by grade level, with no names.", a:"ok",
+    why:"Group-level data that is already public carries low risk. The IRB still decides whether review is needed." },
+  { s:"An assistant principal plans to interview students she has disciplined for absences about why they miss school.", a:"fix",
+    why:"Her authority may pressure students to join or to give 'safe' answers. A safeguard: have someone without disciplinary power recruit and interview, and make clear that saying no has no consequences." },
+  { s:"A teacher-leader requires her own students to complete a research survey in class, for a grade.", a:"no",
+    why:"Tying participation to a grade removes free choice. Research participation must be voluntary, with a real option to decline and no penalty." },
+  { s:"A principal invites teachers to a focus group for her study during the staff meeting she leads.", a:"fix",
+    why:"Teachers may feel they cannot say no to their evaluator. A safeguard: invite separately, let a neutral person run the group, and keep who took part confidential from the principal." },
+  { s:"A director plans to quote a staff member from a three-person team, describing her as 'our only science specialist.'", a:"fix",
+    why:"In a small setting, details can identify people even without names. A safeguard: remove identifying details, combine roles, or ask the person's permission for that quote." },
+];
+const list = document.getElementById('list');
+ITEMS.forEach((it, i) => {
+  const c = document.createElement('div'); c.className = 'card';
+  c.innerHTML = `<p class="stmt" id="s${i}">${i+1}. ${it.s}</p>
+    <div class="btns" role="group" aria-labelledby="s${i}">
+      ${Object.entries(R).map(([k,l]) => `<button type="button" data-k="${k}">${l}</button>`).join('')}
+    </div><div class="fb" aria-live="polite"></div>`;
+  c.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const ok = b.dataset.k === it.a;
+    c.querySelectorAll('button').forEach(x => x.disabled = true);
+    b.classList.add('picked'); c.classList.add('done');
+    const fb = c.querySelector('.fb');
+    fb.className = 'fb show ' + (ok ? 'right' : 'wrong');
+    fb.innerHTML = `<strong>${ok ? 'Yes.' : 'Worth another look. Best fit: ' + R[it.a] + '.'}</strong>${it.why}`;
+  }));
+  list.appendChild(c);
+});
+</script>
+</body>
+</html>
