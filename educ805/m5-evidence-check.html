@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How strong is the evidence? · EDUC 805 Module 5</title>
+<style>
+  :root { --red:#A6192E; --red-d:#7A1222; --red-t:#FCEBEB; --blue:#9BCBEB; --blue-d:#0C447C; --blue-t:#EAF4FB;
+          --ink:#222; --muted:#5F5E5A; --line:#DCDFE3; --ok-t:#E7F4EC; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:14px; font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; color:var(--ink); background:#fff; }
+  h1 { font:bold 20px/1.3 Georgia,serif; color:var(--red-d); margin:0 0 4px; }
+  .lead { margin:0 0 10px; color:var(--muted); font-size:14.5px; }
+  .card { border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:10px; }
+  .card.done { border-left:5px solid var(--blue-d); }
+  .stmt { font-weight:600; margin:0 0 8px; }
+  .btns { display:flex; gap:8px; flex-wrap:wrap; }
+  button { font:inherit; font-size:14px; padding:6px 12px; border-radius:18px; border:1.5px solid var(--blue-d); background:#fff; color:var(--blue-d); cursor:pointer; }
+  button:hover:not(:disabled) { background:var(--blue-t); }
+  button:focus-visible { outline:3px solid var(--blue); outline-offset:2px; }
+  button:disabled { cursor:default; opacity:.55; }
+  button.picked { opacity:1; background:var(--blue-d); color:#fff; }
+  .fb { margin:8px 0 0; font-size:14.5px; padding:8px 10px; border-radius:8px; display:none; }
+  .fb.show { display:block; } .fb.right { background:var(--ok-t); } .fb.wrong { background:var(--red-t); }
+  .fb strong { display:block; margin-bottom:2px; }
+  .note { font-size:13px; color:var(--muted); margin:4px 0 0; }
+</style>
+</head>
+<body>
+<h1>How strong is the evidence?</h1>
+<p class="lead">Five made-up claims about an attendance program. Based on the evidence described, which ESSA tier does each come closest to?</p>
+<div id="list"></div>
+<p class="note">Simplified for practice. Real ESSA tiers also require a well-designed, well-implemented study with a statistically significant positive result.</p>
+<script>
+const T = { t1:"Tier 1 · Strong", t2:"Tier 2 · Moderate", t3:"Tier 3 · Promising", no:"Not evidence of an effect" };
+const ITEMS = [
+  { s:"\"Students were randomly assigned to get our text-message reminders or not. The reminder group missed fewer days.\"", a:"t1",
+    why:"Random assignment to the program or not is an experiment. That is the design behind Tier 1." },
+  { s:"\"Schools that adopted our program were compared with similar schools that did not. Adopting schools improved attendance more.\"", a:"t2",
+    why:"A comparison group without random assignment is a quasi-experiment, the design behind Tier 2." },
+  { s:"\"Across 40 schools, more use of our program was linked to better attendance, even after accounting for poverty and prior attendance.\"", a:"t3",
+    why:"A relationship with statistical controls is a correlational study, the design behind Tier 3. It is promising, not proof of cause." },
+  { s:"\"Principals love it! 95% would recommend it to a colleague.\"", a:"no",
+    why:"Satisfaction tells you people like it, not that it changed attendance." },
+  { s:"\"At our pilot school, chronic absence fell 12% the year after we started.\"", a:"no",
+    why:"A before-and-after change at one school has no comparison group. Many other things could explain the drop." },
+];
+const list = document.getElementById('list');
+ITEMS.forEach((it, i) => {
+  const c = document.createElement('div'); c.className = 'card';
+  c.innerHTML = `<p class="stmt" id="s${i}">${i+1}. ${it.s}</p>
+    <div class="btns" role="group" aria-labelledby="s${i}">
+      ${Object.entries(T).map(([k,l]) => `<button type="button" data-k="${k}">${l}</button>`).join('')}
+    </div><div class="fb" aria-live="polite"></div>`;
+  c.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const ok = b.dataset.k === it.a;
+    c.querySelectorAll('button').forEach(x => x.disabled = true);
+    b.classList.add('picked'); c.classList.add('done');
+    const fb = c.querySelector('.fb');
+    fb.className = 'fb show ' + (ok ? 'right' : 'wrong');
+    fb.innerHTML = `<strong>${ok ? 'Yes.' : 'Not quite. Best fit: ' + T[it.a] + '.'}</strong>${it.why}`;
+  }));
+  list.appendChild(c);
+});
+</script>
+</body>
+</html>
