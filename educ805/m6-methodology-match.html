@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which applied methodology? · EDUC 805 Module 6</title>
+<style>
+  :root { --red:#A6192E; --red-d:#7A1222; --red-t:#FCEBEB; --blue:#9BCBEB; --blue-d:#0C447C; --blue-t:#EAF4FB;
+          --ink:#222; --muted:#5F5E5A; --line:#DCDFE3; --ok-t:#E7F4EC; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:14px; font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; color:var(--ink); background:#fff; }
+  h1 { font:bold 20px/1.3 Georgia,serif; color:var(--red-d); margin:0 0 4px; }
+  .lead { margin:0 0 10px; color:var(--muted); font-size:14.5px; }
+  .card { border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:10px; }
+  .card.done { border-left:5px solid var(--blue-d); }
+  .stmt { font-weight:600; margin:0 0 8px; }
+  .btns { display:flex; gap:8px; flex-wrap:wrap; }
+  button { font:inherit; font-size:14px; padding:6px 12px; border-radius:18px; border:1.5px solid var(--blue-d); background:#fff; color:var(--blue-d); cursor:pointer; }
+  button:hover:not(:disabled) { background:var(--blue-t); }
+  button:focus-visible { outline:3px solid var(--blue); outline-offset:2px; }
+  button:disabled { cursor:default; opacity:.55; }
+  button.picked { opacity:1; background:var(--blue-d); color:#fff; }
+  .fb { margin:8px 0 0; font-size:14.5px; padding:8px 10px; border-radius:8px; display:none; }
+  .fb.show { display:block; } .fb.right { background:var(--ok-t); } .fb.wrong { background:var(--red-t); }
+  .fb strong { display:block; margin-bottom:2px; }
+</style>
+</head>
+<body>
+<h1>Which applied methodology?</h1>
+<p class="lead">Five made-up projects about student absences. Which methodology fits each one best?</p>
+<div id="list"></div>
+<script>
+const M = { ar:"Action research", ypar:"YPAR", is:"Improvement science", pe:"Program evaluation" };
+const ITEMS = [
+  { s:"A 9th-grade teacher team tries a new morning check-in, watches what happens for a month, reflects together, and adjusts it for the next month.", a:"ar",
+    why:"Practitioners studying and improving their own practice in cycles of plan, act, observe, and reflect is action research." },
+  { s:"Ninth graders design a survey about why their peers miss school, analyze the results, and present recommendations to the school board.", a:"ypar",
+    why:"Young people leading the research and the action on an issue in their own lives is youth participatory action research." },
+  { s:"A network of five schools runs small, fast tests of a follow-up call routine, tracking weekly attendance to see what works for which students.", a:"is",
+    why:"Rapid PDSA tests, measures that track improvement, and a networked community are hallmarks of improvement science." },
+  { s:"The district asks whether its two-year mentoring program is meeting its goals and whether to keep funding it.", a:"pe",
+    why:"Judging whether a program meets its goals, to inform a decision about it, is program evaluation." },
+  { s:"A school asks whether its new tutoring program actually reached the students it was designed for, and how well it was carried out.", a:"pe",
+    why:"Checking whether a program was delivered as planned, and to whom, is an implementation (process) evaluation." },
+];
+const list = document.getElementById('list');
+ITEMS.forEach((it, i) => {
+  const c = document.createElement('div'); c.className = 'card';
+  c.innerHTML = `<p class="stmt" id="s${i}">${i+1}. ${it.s}</p>
+    <div class="btns" role="group" aria-labelledby="s${i}">
+      ${Object.entries(M).map(([k,l]) => `<button type="button" data-k="${k}">${l}</button>`).join('')}
+    </div><div class="fb" aria-live="polite"></div>`;
+  c.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const ok = b.dataset.k === it.a;
+    c.querySelectorAll('button').forEach(x => x.disabled = true);
+    b.classList.add('picked'); c.classList.add('done');
+    const fb = c.querySelector('.fb');
+    fb.className = 'fb show ' + (ok ? 'right' : 'wrong');
+    fb.innerHTML = `<strong>${ok ? 'Yes.' : 'Not quite. Best fit: ' + M[it.a] + '.'}</strong>${it.why}`;
+  }));
+  list.appendChild(c);
+});
+</script>
+</body>
+</html>
